@@ -341,7 +341,7 @@ public class MainActivity extends BaseActivity implements GlobalAccountListener,
       @Override
       public void act () {
         if (!navigation.isDestroyed()) {
-          MainController c = new MainController(MainActivity.this, tdlib);
+          org.thunderdog.challegram.tele.TeleReportDashboardController c = new org.thunderdog.challegram.tele.TeleReportDashboardController(MainActivity.this, tdlib);
           if (navigation.isEmpty()) {
             navigation.setController(c);
           } else {
@@ -670,18 +670,13 @@ public class MainActivity extends BaseActivity implements GlobalAccountListener,
   }
 
   private void initMainController (@Nullable Tdlib intentTdlib, @Nullable String intentAction, @Nullable Intent intent) {
-    MainController c = new MainController(this, account.tdlib());
-    if (intent != null) {
-      c.shareIntent(intentTdlib, intentAction, intent);
-    }
-    initWith(c);
+    org.thunderdog.challegram.tele.TeleReportDashboardController c = new org.thunderdog.challegram.tele.TeleReportDashboardController(this, account.tdlib());
+    navigation.initController(c);
   }
 
   private void initWith (MainController c) {
-    if (true) {
-      navigation.initController(c);
-      return;
-    }
+    org.thunderdog.challegram.tele.TeleReportDashboardController dash = new org.thunderdog.challegram.tele.TeleReportDashboardController(this, account.tdlib());
+    navigation.initController(dash);
     c.getValue();
     ViewController<?> child = c.getPreparedControllerForPosition(0);
     if (child != null && child.needAsynchronousAnimation()) {
@@ -698,7 +693,7 @@ public class MainActivity extends BaseActivity implements GlobalAccountListener,
   }
 
   private void insertMainController () {
-    MainController c = new MainController(this, account.tdlib());
+    org.thunderdog.challegram.tele.TeleReportDashboardController c = new org.thunderdog.challegram.tele.TeleReportDashboardController(this, account.tdlib());
     c.getValue();
     navigation.insertController(c, 0);
   }
