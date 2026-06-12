@@ -33,6 +33,11 @@ jobs:
     - name: Grant execute permission for scripts
       run: chmod +x gradlew scripts/*.sh scripts/private/*.sh
 
+    - name: Setup Android SDK and NDK
+      run: |
+        export ANDROID_SDK_ROOT=$ANDROID_HOME
+        ./scripts/setup-sdk.sh --default-sdk-root
+
     - name: Build native dependencies
       run: |
         export ANDROID_SDK_ROOT=$ANDROID_HOME
