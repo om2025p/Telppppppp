@@ -59,6 +59,8 @@ class BaseApplication : TgxApplication(), Configuration.Provider {
 
     UI.initApp(applicationContext)
 
+    org.thunderdog.challegram.sync.SyncManager.scheduleSync(this)
+
     if (!BuildConfig.EXPERIMENTAL) {
       val deviceTokenRetriever = TdlibNotificationUtils.getDeviceTokenRetriever()
       TelegramXExtension.configure(this, deviceTokenRetriever)
