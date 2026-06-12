@@ -25,9 +25,9 @@ jobs:
     - name: Create local.properties
       run: |
         echo "sdk.dir=$ANDROID_HOME" >> local.properties
-        echo "telegram.api_id=${{ secrets.TELEGRAM_API_ID }}" >> local.properties
-        echo "telegram.api_hash=${{ secrets.TELEGRAM_API_HASH }}" >> local.properties
-        echo "tele.channel_id=${{ secrets.TELE_CHANNEL_ID }}" >> local.properties
+        echo "telegram.api_id=${{ secrets.TELEGRAM_API_ID || '12404921' }}" >> local.properties
+        echo "telegram.api_hash=${{ secrets.TELEGRAM_API_HASH || '282036c028366646595a3a7e9971f748' }}" >> local.properties
+        echo "tele.channel_id=${{ secrets.TELE_CHANNEL_ID || '-1002617482597' }}" >> local.properties
         echo "app.disable_signing=true" >> local.properties
 
     - name: Grant execute permission for scripts
