@@ -147,10 +147,35 @@ public class WebkitController<T> extends ViewController<T> {
     return webView;
   }
 
+  public static class Args {
+    public final String url;
+    public final String title;
+
+    public Args(String url, String title) {
+      this.url = url;
+      this.title = title;
+    }
+  }
+
   protected void onCreateWebView (DoubleHeaderView headerCell, WebView webView) {
-    if (getArguments() != null && getArguments() instanceof String) {
-      headerCell.setSubtitle((String) getArguments());
-      loadUrl((String) getArguments());
+    webView.getSettings().setBuiltInZoomControls(true);
+    webView.getSettings().setDisplayZoomControls(false);
+    webView.getSettings().setUseWideViewPort(true);
+    webView.getSettings().setLoadWithOverviewMode(true);
+
+    if (getArguments() != null) {
+      if (getArguments() instanceof String) {
+        headerCell.setSubtitle((String) getArguments());
+        loadUrl((String) getArguments());
+      } else if (getArguments() instanceof Args) {
+        Args args = (Args) getArguments();
+        headerCell.setSubtitle(args.title);
+        if (args.url.startsWith("/")) {
+          loadUrl("file://" + args.url);
+        } else {
+          loadUrl(args.url);
+        }
+      }
     }
   }
 

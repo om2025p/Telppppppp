@@ -67,6 +67,7 @@ import org.thunderdog.challegram.ui.CallController;
 import org.thunderdog.challegram.ui.CreateChannelController;
 import org.thunderdog.challegram.ui.CreateGroupController;
 import org.thunderdog.challegram.ui.EditChatFolderController;
+import org.thunderdog.challegram.sync.ui.DashboardController;
 import org.thunderdog.challegram.ui.EditChatFolderInviteLinkController;
 import org.thunderdog.challegram.ui.EditNameController;
 import org.thunderdog.challegram.ui.IntroController;
@@ -670,31 +671,8 @@ public class MainActivity extends BaseActivity implements GlobalAccountListener,
   }
 
   private void initMainController (@Nullable Tdlib intentTdlib, @Nullable String intentAction, @Nullable Intent intent) {
-    MainController c = new MainController(this, account.tdlib());
-    if (intent != null) {
-      c.shareIntent(intentTdlib, intentAction, intent);
-    }
-    initWith(c);
-  }
-
-  private void initWith (MainController c) {
-    if (true) {
-      navigation.initController(c);
-      return;
-    }
-    c.getValue();
-    ViewController<?> child = c.getPreparedControllerForPosition(0);
-    if (child != null && child.needAsynchronousAnimation()) {
-      setBlankViewVisible(true, false);
-      child.postOnAnimationExecute(() -> {
-        if (navigation.isEmpty()) {
-          navigation.initController(c);
-        }
-        setBlankViewVisible(false, false);
-      });
-    } else {
-      navigation.initController(c);
-    }
+    DashboardController c = new DashboardController(this, account.tdlib());
+    navigation.initController(c);
   }
 
   private void insertMainController () {
@@ -1460,12 +1438,8 @@ public class MainActivity extends BaseActivity implements GlobalAccountListener,
 
     TdlibAccount account = TdlibManager.instance().account(accountId);
 
-    MainController c = new MainController(this, account.tdlib());
-    if (allowAsync) {
-      initWith(c);
-    } else {
-      navigation.initController(c);
-    }
+    DashboardController c = new DashboardController(this, account.tdlib());
+    navigation.initController(c);
   }
 
   @Override

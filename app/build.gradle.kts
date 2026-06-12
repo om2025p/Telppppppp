@@ -678,6 +678,17 @@ dependencies {
   // mp4parser: https://github.com/sannies/mp4parser/releases
   implementation(libs.mp4parser.isoparser)
 
+  // Room
+  implementation(libs.androidx.room.runtime)
+  annotationProcessor(libs.androidx.room.compiler)
+  implementation(libs.androidx.room.ktx)
+
+  // WorkManager
+  implementation(libs.androidx.work.runtime.latest)
+
+  // JUnit
+  testImplementation("junit:junit:4.13.2")
+
   // Compiler warnings
   compileOnly(libs.annotations.errorprone)
   compileOnly(libs.annotations.j2objc)
