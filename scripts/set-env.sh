@@ -1,10 +1,17 @@
 #!/bin/bash
 set -e
 
-STYLE_END="$(tput sgr0)"
-STYLE_ERROR="$(tput bold)$(tput setaf 1)"
-STYLE_WARN="$(tput setaf 3)"
-STYLE_INFO="$(tput setaf 6)"
+if [ -t 1 ] && [ -n "$TERM" ] && [ "$TERM" != "dumb" ]; then
+  STYLE_END="$(tput sgr0)"
+  STYLE_ERROR="$(tput bold)$(tput setaf 1)"
+  STYLE_WARN="$(tput setaf 3)"
+  STYLE_INFO="$(tput setaf 6)"
+else
+  STYLE_END=""
+  STYLE_ERROR=""
+  STYLE_WARN=""
+  STYLE_INFO=""
+fi
 
 test -f version.properties || (echo -e "${STYLE_ERROR}You must call this script from the root folder.${STYLE_END}" && exit 1)
 
@@ -39,9 +46,9 @@ case "${PLATFORM}" in
 esac
 
 if [ ! "$IGNORE_SDK" ]; then
-  if [[ ! -d ${ANDROID_SDK_ROOT} ]]; then
+  if [[ ! -d "${ANDROID_SDK_ROOT}" ]]; then
     if [[ "$1" == "--default-sdk-root" ]]; then
-      ANDROID_SDK_ROOT=$DEFAULT_ANDROID_SDK
+      ANDROID_SDK_ROOT=$DEFAULT_ANDROID_SDK_ROOT
     else
       while true; do
         read -r -p "ANDROID_SDK_ROOT is not set. Default is ${DEFAULT_ANDROID_SDK_ROOT}. Proceed with default? [Y/n]: " yn

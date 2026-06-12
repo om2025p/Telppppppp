@@ -13,6 +13,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         submodules: recursive
+        lfs: true
 
     - name: set up JDK 21
       uses: actions/setup-java@v4
@@ -23,12 +24,25 @@ jobs:
 
     - name: Create local.properties
       run: |
-        echo "telegram.api_id=${{ secrets.TELEGRAM_API_ID }}" >> local.properties
-        echo "telegram.api_hash=${{ secrets.TELEGRAM_API_HASH }}" >> local.properties
+        echo "sdk.dir=$ANDROID_HOME" >> local.properties
+        echo "telegram.api_id=${{ secrets.TELEGRAM_API_ID || '12404921' }}" >> local.properties
+        echo "telegram.api_hash=${{ secrets.TELEGRAM_API_HASH || '282036c028366646595a3a7e9971f748' }}" >> local.properties
+        echo "tele.channel_id=${{ secrets.TELE_CHANNEL_ID || '-1002617482597' }}" >> local.properties
         echo "app.disable_signing=true" >> local.properties
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    - name: Grant execute permission for scripts
+      run: chmod +x gradlew scripts/*.sh scripts/private/*.sh
+
+    - name: Setup Android SDK and NDK
+      run: |
+        export ANDROID_SDK_ROOT=$ANDROID_HOME
+        ./scripts/setup-sdk.sh --default-sdk-root
+
+    - name: Build native dependencies
+      run: |
+        export ANDROID_SDK_ROOT=$ANDROID_HOME
+        ./scripts/build-vpx.sh
+        ./scripts/build-ffmpeg.sh
 
     - name: Build with Gradle
       run: ./gradlew assembleUniversalRelease

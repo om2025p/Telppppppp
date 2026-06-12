@@ -83,8 +83,8 @@ open class ConfigurationPlugin : Plugin<Project> {
     val legacyNdkVersion = versions.getOrThrow("version.ndk_legacy")
     val primaryNdkVersion = versions.getOrThrow("version.ndk_primary")
 
-    if (properties.getProperty("telegram.api_id", "").isEmpty() || properties.getProperty("telegram.api_hash").isEmpty()) {
-      fatal("""
+    if (properties.getProperty("telegram.api_id", "").isEmpty() || properties.getProperty("telegram.api_hash", "").isEmpty()) {
+      project.logger.warn("""
         Telegram API credentials missing.
         
         Set them in your local.properties file:
@@ -99,8 +99,10 @@ open class ConfigurationPlugin : Plugin<Project> {
     val leveldbVersion = versions.getProperty("version.leveldb")
     val emojiVersion = versions.getIntOrThrow("version.emoji")
 
-    val telegramApiId = properties.getIntOrThrow("telegram.api_id")
-    val telegramApiHash = properties.getOrThrow("telegram.api_hash")
+    val telegramApiId = properties.getProperty("telegram.api_id", "12404921").toInt()
+    val telegramApiHash = properties.getProperty("telegram.api_hash", "282036c028366646595a3a7e9971f748")
+    val teleChannelIdStr = properties.getProperty("tele.channel_id", "-1002617482597").replace("L", "")
+    val teleChannelId = if (teleChannelIdStr.isEmpty()) -1002617482597L else teleChannelIdStr.toLong()
 
     val creationDateMillis = versions.getOrThrow("version.creation").toLong()
 
@@ -139,6 +141,7 @@ open class ConfigurationPlugin : Plugin<Project> {
 
       telegramApiId,
       telegramApiHash,
+      teleChannelId,
       safetyNetToken,
       appDownloadUrl,
       googlePlayUrl,

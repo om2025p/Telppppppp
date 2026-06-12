@@ -4,13 +4,15 @@ set -e
 FILE=$1
 VAR=$2
 
-while [ ! -f "$FILE" ]; do
-  read -e -r -p "Properties file: " FILE
-done
+if [ ! -f "$FILE" ]; then
+  echo "Properties file $FILE not found!"
+  exit 1
+fi
 
-while [[ ! "$VAR" =~ ^[a-z][a-zA-Z0-9_.]*$ ]]; do
-  read -r -p "Property name: " VAR
-done
+if [[ ! "$VAR" =~ ^[a-z][a-zA-Z0-9_.]*$ ]]; then
+  echo "Invalid property name: $VAR"
+  exit 1
+fi
 
 while IFS='=' read -r key value; do
   if [[ "$key" == "$VAR" ]]; then
