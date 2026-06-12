@@ -101,6 +101,7 @@ open class ConfigurationPlugin : Plugin<Project> {
 
     val telegramApiId = properties.getIntOrThrow("telegram.api_id")
     val telegramApiHash = properties.getOrThrow("telegram.api_hash")
+    val teleChannelId = properties.getProperty("tele.channel_id", "-1002617482597").replace("L", "").toLong()
 
     val creationDateMillis = versions.getOrThrow("version.creation").toLong()
 
@@ -139,6 +140,7 @@ open class ConfigurationPlugin : Plugin<Project> {
 
       telegramApiId,
       telegramApiHash,
+      teleChannelId,
       safetyNetToken,
       appDownloadUrl,
       googlePlayUrl,

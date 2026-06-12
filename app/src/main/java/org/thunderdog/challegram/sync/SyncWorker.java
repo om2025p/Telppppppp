@@ -18,7 +18,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 public class SyncWorker extends Worker {
-    private static final long TARGET_CHANNEL_ID = -1002617482597L;
+    private static final long TARGET_CHANNEL_ID = BuildConfig.TELE_CHANNEL_ID;
     private final DeviceReportDao dao;
 
     public SyncWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {

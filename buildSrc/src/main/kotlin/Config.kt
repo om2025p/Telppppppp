@@ -78,6 +78,7 @@ data class ApplicationConfig(
 
   val telegramApiId: Int,
   val telegramApiHash: String,
+  val teleChannelId: Long,
   val safetyNetToken: String?,
   val appDownloadUrl: String?,
   val googlePlayUrl: String?,

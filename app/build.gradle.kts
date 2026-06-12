@@ -83,6 +83,7 @@ android {
 
     buildConfigInt("TELEGRAM_API_ID", config.telegramApiId)
     buildConfigString("TELEGRAM_API_HASH", config.telegramApiHash)
+    buildConfigLong("TELE_CHANNEL_ID", config.teleChannelId)
 
     buildConfigString("TELEGRAM_RESOURCES_CHANNEL", Telegram.RESOURCES_CHANNEL)
     buildConfigString("TELEGRAM_UPDATES_CHANNEL", Telegram.UPDATES_CHANNEL)
