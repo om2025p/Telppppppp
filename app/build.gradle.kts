@@ -681,7 +681,8 @@ dependencies {
   // Compiler warnings
   compileOnly(libs.annotations.errorprone)
   compileOnly(libs.annotations.j2objc)
-  compileOnly(libs.androidx.room.latest)
+  implementation(libs.androidx.room.runtime)
+  annotationProcessor(libs.androidx.room.compiler)
   compileOnly(libs.annotations.jsr305)
   compileOnly(libs.annotations.kotlin)
 }

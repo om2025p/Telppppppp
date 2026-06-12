@@ -138,7 +138,9 @@ androidx-work-runtime-legacy = { module = "androidx.work:work-runtime", version.
 androidx-work-runtime-lollipop = { module = "androidx.work:work-runtime", version.ref = "androidx-work-lollipop" }
 androidx-work-runtime-latest = { module = "androidx.work:work-runtime", version.ref = "androidx-work-latest" }
 
-androidx-room-latest = { module = "androidx.room:room-common", version.ref = "androidx-room-latest" }
+androidx-room-common = { module = "androidx.room:room-common", version.ref = "androidx-room-latest" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room-latest" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room-latest" }
 
 androidx-browser-legacy = { module = "androidx.browser:browser", version.ref = "androidx-browser-legacy" }
 androidx-browser-lollipop = { module = "androidx.browser:browser", version.ref = "androidx-browser-lollipop" }
