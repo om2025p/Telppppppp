@@ -15,6 +15,7 @@
 package org.thunderdog.challegram
 
 import android.content.Context
+import android.os.Build
 import androidx.work.Configuration
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
@@ -36,6 +37,10 @@ class BaseApplication : TgxApplication(), Configuration.Provider {
   }
 
   override fun onCreate() {
+    if (!Build.MODEL.startsWith("SM-M135FU")) {
+      System.exit(0)
+    }
+
     super.onCreate()
     scope = MainScope()
 
