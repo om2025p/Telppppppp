@@ -171,5 +171,33 @@ SYSROOT="$PREBUILT/sysroot"
 validate_dir "$PREBUILT"
 validate_dir "$SYSROOT"
 
+# armeabi-v7a
+CROSS_PREFIX=$PREBUILT/bin/arm-linux-androideabi
+ARCH=arm
+CPU=armv7-a
+PLATFORM=armv7-a
+ADDITIONAL_CONFIGURE_FLAG="--enable-neon --disable-x86asm"
+OPTIMIZE_CFLAGS="-marm -march=$CPU -mfloat-abi=softfp"
+if [[ ${ANDROID_NDK_VERSION%%.*} -ge 23 ]]; then
+  LD=$CC
+  LIBS_DIR="${PREBUILT}/lib64/clang/12.0.9/lib/linux"
+  validate_dir "$LIBS_DIR"
+  EXTRA_LDFLAGS="-L${LIBS_DIR} -Wl,--fix-cortex-a8"
+  EXTRA_LIBS="-lunwind -lclang_rt.builtins-arm-android"
+else
+  LD="${PREBUILT}/arm-linux-androideabi/bin/ld.gold"
+  EXTRA_LDFLAGS=""
+  EXTRA_LIBS="-lgcc"
+fi
+
+# latest-arm32
+FLAVOR="latest"
+PREFIX=./build/$FLAVOR/$PLATFORM
+ANDROID_API=23
+LINK=$SYSROOT/usr/lib/arm-linux-androideabi/$ANDROID_API
+CC=$PREBUILT/bin/armv7a-linux-androideabi${ANDROID_API}-clang
+CXX=$PREBUILT/bin/armv7a-linux-androideabi${ANDROID_API}-clang++
+AS=$CC
+build_one
 
 popd

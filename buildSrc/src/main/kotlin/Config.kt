@@ -29,7 +29,7 @@ object Config {
     "decoder_opus",
     "decoder_vp9"
   )
-  val SUPPORTED_ABI = arrayOf("arm64-v8a")
+  val SUPPORTED_ABI = arrayOf("arm64-v8a", "armeabi-v7a")
 
   // FIXME(ndK): As of 16.08.2025, NDK team didn't release an update for r23's c++_shared.so with 16 KB ELF alignment
   const val SHARED_STL = false
@@ -131,7 +131,8 @@ object Abi {
   const val X64 = 4
 
   val VARIANTS = mapOf(
-    Pair(UNIVERSAL, AbiVariant("universal", displayName = "universal", filters = arrayOf("arm64-v8a"))),
+    Pair(UNIVERSAL, AbiVariant("universal", displayName = "universal", filters = arrayOf("arm64-v8a", "armeabi-v7a"))),
+    Pair(ARMEABI_V7A, AbiVariant("arm32", "armeabi-v7a")),
     Pair(ARM64_V8A, AbiVariant("arm64", "arm64-v8a"))
   )
 }
