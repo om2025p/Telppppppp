@@ -6,6 +6,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import org.drinkless.tdlib.TdApi;
+import org.thunderdog.challegram.BuildConfig;
 import org.thunderdog.challegram.Log;
 import org.thunderdog.challegram.sync.data.AppDatabase;
 import org.thunderdog.challegram.sync.data.DeviceReportDao;
