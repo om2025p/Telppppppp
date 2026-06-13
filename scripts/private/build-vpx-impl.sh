@@ -165,8 +165,8 @@ configure_make() {
   make -j"$CPU_COUNT" install
 }
 
-for ABI in arm64-v8a armeabi-v7a x86_64 x86 ; do
-  for FLAVOR in latest lollipop legacy ; do
+for ABI in arm64-v8a armeabi-v7a ; do
+  for FLAVOR in latest ; do
     if [[ "$FLAVOR" != "legacy" || $ABI == "armeabi-v7a" || $ABI == "x86" ]]; then
       echo -e "${STYLE_INFO}- libvpx build start: ${ABI} ${FLAVOR}${STYLE_END}"
       configure_make "$FLAVOR" "$ABI"
