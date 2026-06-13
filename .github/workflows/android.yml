@@ -41,6 +41,9 @@ jobs:
     - name: Build native dependencies
       run: |
         export ANDROID_SDK_ROOT=$ANDROID_HOME
+        # Apply patches required for specific architectures (especially armeabi-v7a)
+        ./scripts/private/patch-opus-impl.sh
+        ./scripts/patch-androidx-media.sh
         ./scripts/build-vpx.sh
         ./scripts/build-ffmpeg.sh
 
