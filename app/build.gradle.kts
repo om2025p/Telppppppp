@@ -478,6 +478,20 @@ android {
 
 gradle.projectsEvaluated {
   tasks.preBuild.configure {
+    doFirst {
+      val libtdjni = file("../tdlib/src/main/libs/arm64-v8a/libtdjni.so")
+      if (libtdjni.exists() && libtdjni.bufferedReader().use { it.readLine() }?.startsWith("version https://git-lfs") == true) {
+        throw GradleException("""
+          Git LFS files are not downloaded!
+
+          Please run:
+          1. git lfs install
+          2. git lfs pull
+
+          And then try building again.
+        """.trimIndent())
+      }
+    }
     dependsOn(
       generateResourcesAndThemes,
       checkEmojiKeyboard,
