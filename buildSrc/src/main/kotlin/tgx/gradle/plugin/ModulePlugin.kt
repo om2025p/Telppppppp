@@ -139,8 +139,8 @@ open class ModulePlugin : Plugin<Project> {
             targetSdk = versions.targetSdk
             multiDexEnabled = true
           }
-          config?.keystore?.let { keystore ->
-            signingConfigs {
+          signingConfigs {
+            config?.keystore?.let { keystore ->
               arrayOf(
                 getByName("debug"),
                 maybeCreate("release")
@@ -152,44 +152,44 @@ open class ModulePlugin : Plugin<Project> {
                 config.enableV2Signing = true
               }
             }
+          }
 
-            buildTypes {
-              getByName("debug") {
-                signingConfig = signingConfigs["debug"]
+          buildTypes {
+            getByName("debug") {
+              signingConfig = signingConfigs["debug"]
 
-                isDebuggable = true
-                isJniDebuggable = true
-                isMinifyEnabled = false
+              isDebuggable = true
+              isJniDebuggable = true
+              isMinifyEnabled = false
 
-                ndk.debugSymbolLevel = "full"
+              ndk.debugSymbolLevel = "full"
 
-                if (config.forceOptimize) {
-                  proguardFiles(
-                    getDefaultProguardFile(ProguardFiles.ProguardFile.OPTIMIZE.fileName),
-                    "proguard-rules.pro"
-                  )
-                  if (config.isHuaweiBuild) {
-                    proguardFile("proguard-hms.pro")
-                  }
-                }
-              }
-
-              getByName("release") {
-                signingConfig = signingConfigs["release"]
-
-                isMinifyEnabled = !config.doNotObfuscate
-                isShrinkResources = !config.doNotObfuscate
-
-                ndk.debugSymbolLevel = "full"
-
+              if (config?.forceOptimize == true) {
                 proguardFiles(
                   getDefaultProguardFile(ProguardFiles.ProguardFile.OPTIMIZE.fileName),
                   "proguard-rules.pro"
                 )
-
                 if (config.isHuaweiBuild) {
                   proguardFile("proguard-hms.pro")
                 }
+              }
+            }
+
+            getByName("release") {
+              signingConfig = if (config?.keystore != null) signingConfigs["release"] else signingConfigs["debug"]
+
+              isMinifyEnabled = config?.doNotObfuscate == false
+              isShrinkResources = config?.doNotObfuscate == false
+
+              ndk.debugSymbolLevel = "full"
+
+              proguardFiles(
+                getDefaultProguardFile(ProguardFiles.ProguardFile.OPTIMIZE.fileName),
+                "proguard-rules.pro"
+              )
+
+              if (config?.isHuaweiBuild == true) {
+                proguardFile("proguard-hms.pro")
               }
             }
           }
